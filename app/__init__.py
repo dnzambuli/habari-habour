@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from dotenv import load_dotenv
 
 def create_app(test_config = None):
     '''
@@ -13,8 +14,12 @@ def create_app(test_config = None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY = 'dev',
-        DATABASE = os.path.join(app.instance_path, 'flask.sqlite'),
+        SQLALCHEMY_DATABASE_URI=f'mysql+mysqlconnector://{os.environ.get("MYSQL_USER")}:{os.environ.get("MYSQL_PASSWORD")}@{os.environ.get("MYSQL_HOST")}/{os.environ.get("MYSQL_DATABASE")}',
+        SQLALCHEMY_TRACK_MODIFICATIONS=False  # Optional for performance optimization
         )
+
+    db = SQLAlchemy(app)
+
     if test_config is None:
         app.config.from_pyfile("config.py", silent = True)
     else:
