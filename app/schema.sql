@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS interests;
+
 
 -- the user store
 CREATE TABLE user (
@@ -9,19 +11,19 @@ CREATE TABLE user (
 );
 
 -- the interest categories
-CREATE TABLE category(
-    cat_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    cat_name VARCHAR(50) UNIQUE
+CREATE TABLE category (
+  cat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  cat_name VARCHAR(50) UNIQUE
 );
 
 -- the interest/ user
 
-CREATE TABLE interests(
-    int_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER FOREIGN KEY REFERENCES user(id),
-    cat_id INTEGER FOREIGN KEY REFERENCES category(cat_id),
-    interest_name VARCHAR(256),
-    weight INTEGER DEFAULT 1
+CREATE TABLE interests (
+  int_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER FOREIGN KEY REFERENCES user (id),
+  cat_id INTEGER FOREIGN KEY REFERENCES category(cat_id),
+  interest_name VARCHAR(256),
+  weight INTEGER DEFAULT 1
 )
 
 
