@@ -3,7 +3,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 
-from . import db
+from . import db 
+from . import auth
 
 def create_app(test_config=None):
     '''
@@ -24,6 +25,7 @@ def create_app(test_config=None):
         SQLALCHEMY_DATABASE_URI=f'mysql+mysqlconnector://{os.environ["MYSQL_USER"]}:{os.environ["MYSQL_PASSWORD"]}@{os.environ["MYSQL_HOST"]}/{os.environ["MYSQL_DATABASE"]}',
         SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
+    app.register_blueprint(auth.bp) # registers new users and to log in/out
 
     db.init_app(app)
 
